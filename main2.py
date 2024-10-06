@@ -6,12 +6,27 @@ from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import LabelEncoder
 from scipy.sparse import csr_matrix
 import pickle
+import os
+import zipfile
 
 # Initialize Flask app
-app = Flask(__name__,template_folder='templatessss')
+app = Flask(__name__, template_folder='templatessss')
 
-model=pickle.load(open(r'notebooks/KNN_model.pkl','rb'))
-movies_df=pickle.load(open(r'notebooks/movies_df.pkl','rb'))
+zip_file_path = 'notebooks/notebooks.zip'
+extract_path = 'notebooks/extracted/'
+
+# Extract the zip file if it hasn't been extracted yet
+if not os.path.exists(extract_path):
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_path)
+
+# Define the file paths for the model and the dataset
+model_path = os.path.join(extract_path, 'KNN_model.pkl')
+movies_df_path = os.path.join(extract_path, 'movies_df.pkl')
+
+# Load the model and dataset
+model = pickle.load(open(model_path, 'rb'))
+movies_df = pickle.load(open(movies_df_path, 'rb'))
 
 # Create a sparse matrix for the KNN model
 movies_df_matrix = csr_matrix(movies_df.values)
