@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-image: url('static/movies-02-900x600.jpg');
+            background-size: auto 100%;  /* Ensures it fits vertically */
+            background-repeat: repeat-x; /* Repeat the background horizontally */
+            background-position: 0 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: moveBackground 30s linear infinite;  /* Continuous movement */
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;  /* Starting position */
+            }
+            100% {
+                background-position: -2000px 0;  /* Ending position to the left */
+            }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            width: 200px;
+            margin: 0 auto;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recommendations</h1>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% else %}
+            <ul>
+            {% for recommendation in recommendations %}
+                <li>{{ recommendation }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <a href="/">Go Back</a>
+    </div>
+</body>
+</html>
+
